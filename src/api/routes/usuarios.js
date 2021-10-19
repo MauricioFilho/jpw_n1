@@ -18,7 +18,7 @@ router.get('/',  async function(req, res){
     }
 
     if(usuario.length <= 0){
-        usuario.status(404).json({error: "Não existem usuários cadastrados!"})
+        res.status(404).json({error: "Não existem usuários cadastrados!"})
     } else {
         res.json(usuario)
     }
@@ -57,6 +57,9 @@ router.put('/:id', async function(req, res){
         res.status(400).json({error: "Requisição fora dos padrões!"})
     } else {
         usuarioModificado = await Usuario.findByIdAndUpdate(id, req.body)
+        if(!usuarioModificado){
+            res.status(404).json({error: "Usuario não encontrado!"})
+        }
     }
     res.json(usuarioModificado)
 })

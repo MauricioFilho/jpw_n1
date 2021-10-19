@@ -57,6 +57,9 @@ router.put('/:id', async function(req, res){
         res.status(400).json({error: "Requisição fora dos padrões!"})
     } else {
         produtoModificado = await Produto.findByIdAndUpdate(id, req.body)
+        if(!produtoModificado) {
+            res.status(404).json({error: "Produto não encontrado!"})
+        }
     }
     res.json(produtoModificado)
 })

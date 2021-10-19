@@ -57,6 +57,9 @@ router.put('/:id', async function(req, res){
         res.status(400).json({error: "Requisição fora dos padrões!"})
     } else {
         enderecoModificado = await Endereco.findByIdAndUpdate(id, req.body)
+        if(!enderecoModificado) {
+            res.status(404).json({error: "Endereço não encontrado!"})
+        }
     }
     res.json(enderecoModificado)
 })
@@ -73,7 +76,6 @@ router.delete('/:id', async function(req, res){
             res.status(404).json({error: "Endereço não encontrado!"})
         }
     } 
-    
     res.json(enderecoDeletado)
 })
 
