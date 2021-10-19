@@ -6,7 +6,6 @@ const routes = require('./api/routes/')
 const mongoose = require('mongoose')
 const databaseOptions = require('./api/data/database.json')
 
-
 app.use(express.json())
 app.use('/api', routes)
 

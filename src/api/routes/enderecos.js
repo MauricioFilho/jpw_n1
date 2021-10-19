@@ -17,8 +17,8 @@ router.get('/',  async function(req, res){
         enderecos = await Endereco.find().skip(pageOptions.page * pageOptions.limit).limit(pageOptions.limit)
     }
 
-    if(produtos.length <= 0){
-        res.status(404).json({error: "Lista de endereços vazia!"})
+    if(enderecos.length <= 0){
+        res.status(404).json({error: "Não existem endereços cadastrados!"})
     } else {
         res.json(enderecos)
     }
@@ -27,11 +27,12 @@ router.get('/',  async function(req, res){
 //retorna elemento por id 
 router.get('/:id', async function(req, res){
     let id = req.params.id
+    let endereco
 
     if(!id.match(/^[0-9a-fA-F]{24}$/)) {
         res.status(400).json({error: "Requisição fora dos padrões!"})
     } else {
-        let endereco = await Endereco.findById(id)
+        endereco = await Endereco.findById(id)
     }
 
     if(!endereco){
@@ -50,21 +51,36 @@ router.post('/', async function(req, res){
 
 //atualiza elemento por id
 router.put('/:id', async function(req, res){
-    let id = ObjectId.fromString(req.params.id)
-    let enderecoModificado = await Endereco.findByIdAndUpdate(id, req.body)
+    let id = req.params.id
+    let enderecoModificado
+    if(!id.match(/^[0-9a-fA-F]{24}$/)) {
+        res.status(400).json({error: "Requisição fora dos padrões!"})
+    } else {
+        enderecoModificado = await Endereco.findByIdAndUpdate(id, req.body)
+    }
     res.json(enderecoModificado)
 })
 
 //deleta elemento por id
 router.delete('/:id', async function(req, res){
-    let deletedEndereco = await Endereco.findByIdAndDelete(req.params.id)
-    res.json(deletedEndereco)
+    let id = req.params.id
+    let enderecoDeletado
+    if(!id.match(/^[0-9a-fA-F]{24}$/)) {
+        res.status(400).json({error: "Requisição fora dos padrões!"})
+    } else {
+        enderecoDeletado = await Endereco.findByIdAndDelete(id)
+        if(!enderecoDeletado) {
+            res.status(404).json({error: "Endereço não encontrado!"})
+        }
+    } 
+    
+    res.json(enderecoDeletado)
 })
 
 //deleta todos elementos
 router.delete('/', async function(req, res){
-    let deletados = await Endereco.deleteMany()
-    res.json(deletados)
+    let quantidadedeletados = await Endereco.deleteMany()
+    res.json(quantidadedeletados)
 })
 
 module.exports = router
