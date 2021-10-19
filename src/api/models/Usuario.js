@@ -1,15 +1,9 @@
 const mongoose = require('mongoose')
 
 let schema = new mongoose.Schema({
-    nome: {
-        type: String,
-        required: true,
-    },
+    nome: String,
     senha: String,
-    admin: {
-        type: Boolean,
-        default: false
-    }
+    token: String
 })
 
 
