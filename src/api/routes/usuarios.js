@@ -5,6 +5,7 @@ const Usuario = require('../models/Usuario')
 //retorna todos os elementos
 router.get('/',  async function(req, res){
     let usuario
+    res.header("Access-Control-Allow-Origin", "*");
     const pageOptions = {
         page: parseInt(req.query.page, 10) || 0,
         limit: parseInt(req.query.limit, 10) || 10,
@@ -44,6 +45,7 @@ router.get('/:id', async function(req, res){
 
 //adiciona elemento
 router.post('/', async function(req, res){
+    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
     let novoUsuario = new Usuario(req.body)
     await novoUsuario.save()
     res.json(novoUsuario)

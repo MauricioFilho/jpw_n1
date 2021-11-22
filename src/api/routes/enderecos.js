@@ -5,6 +5,7 @@ const Endereco = require('../models/Endereco')
 //retorna todos os elementos
 router.get('/',  async function(req, res){
     let enderecos
+    res.header("Access-Control-Allow-Origin", "*");
     const pageOptions = {
         page: parseInt(req.query.page, 10) || 0,
         limit: parseInt(req.query.limit, 10) || 10,

@@ -1,4 +1,4 @@
 {
-    "url": "mongodb+srv://mauricio:admin@cluster0.r1odn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    "url": "mongodb+srv://magina:admin@cluster0.r1odn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 }
     

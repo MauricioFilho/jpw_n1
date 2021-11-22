@@ -8,7 +8,7 @@ const databaseOptions = require('./api/data/database.json')
 
 app.use(express.json())
 app.use('/api', routes)
-
+app.use(cors())
 mongoose.connect(databaseOptions.url).then(function(){
     app.listen(8080, function(){
         console.log(`Servidor rodando na porta ${porta}`)
