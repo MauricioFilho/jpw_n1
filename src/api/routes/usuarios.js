@@ -5,7 +5,6 @@ const Usuario = require('../models/Usuario')
 //retorna todos os elementos
 router.get('/',  async function(req, res){
     let usuario
-    res.header("Access-Control-Allow-Origin", "*");
     const pageOptions = {
         page: parseInt(req.query.page, 10) || 0,
         limit: parseInt(req.query.limit, 10) || 10,
@@ -17,12 +16,7 @@ router.get('/',  async function(req, res){
     } else {
         usuario = await Usuario.find().skip(pageOptions.page * pageOptions.limit).limit(pageOptions.limit)
     }
-
-    if(usuario.length <= 0){
-        res.status(404).json({error: "Não existem usuários cadastrados!"})
-    } else {
-        res.json(usuario)
-    }
+    res.json(usuario)   
 })
 
 //retorna elemento por id 
@@ -35,7 +29,6 @@ router.get('/:id', async function(req, res){
     } else {
         usuario = await Usuario.findById(id)
     }
-
     if(!usuario){
         res.status(404).json({error: "Usuario não encontrado!"})
     }
@@ -45,7 +38,6 @@ router.get('/:id', async function(req, res){
 
 //adiciona elemento
 router.post('/', async function(req, res){
-    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
     let novoUsuario = new Usuario(req.body)
     await novoUsuario.save()
     res.json(novoUsuario)

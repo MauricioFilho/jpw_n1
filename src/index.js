@@ -6,12 +6,13 @@ const routes = require('./api/routes/')
 const mongoose = require('mongoose')
 const databaseOptions = require('./api/data/database.json')
 
+app.use(cors())
 app.use(express.json())
 app.use('/api', routes)
-app.use(cors())
+
 mongoose.connect(databaseOptions.url).then(function(){
     app.listen(8080, function(){
-        console.log(`Servidor rodando na porta ${porta}`)
+        console.log(`Servidor rodando na porta ${3000}`)
     })
 }).catch(function(){
     console.log('Error 500: Internal server Error!')

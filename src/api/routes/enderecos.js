@@ -5,7 +5,6 @@ const Endereco = require('../models/Endereco')
 //retorna todos os elementos
 router.get('/',  async function(req, res){
     let enderecos
-    res.header("Access-Control-Allow-Origin", "*");
     const pageOptions = {
         page: parseInt(req.query.page, 10) || 0,
         limit: parseInt(req.query.limit, 10) || 10,
@@ -17,12 +16,7 @@ router.get('/',  async function(req, res){
     } else {
         enderecos = await Endereco.find().skip(pageOptions.page * pageOptions.limit).limit(pageOptions.limit)
     }
-
-    if(enderecos.length <= 0){
-        res.status(404).json({error: "Não existem endereços cadastrados!"})
-    } else {
-        res.json(enderecos)
-    }
+    res.json(enderecos)
 })
 
 //retorna elemento por id 
